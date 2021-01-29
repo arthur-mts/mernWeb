@@ -13,10 +13,10 @@ export default function Username({accountName, dynamicLink} : UsernameProps){
 
   return(
     <div className="flex justify-center items-center w-screen h-screen">
-      <div className="flex flex-col w-9/12 items-center">
+      <div className="flex flex-col w-9/12 items-center text-center">
         <h1 className="text-2xl font-bold">{`This page is for ${accountName}`}</h1>
         <button type="button" className="mt-5 border-2 border-solid rounded px-14 py-4 font-bold bg-blue" onClick={()=>setDynamicLinkVisibility(true)}>Share</button>
-        {dynamicLinkVisibility && (<a className="mt-5 underline" href={dynamicLink}>{dynamicLink}</a>)}
+        {dynamicLinkVisibility && (<a className="break-all mt-5 underline" href={dynamicLink}>{dynamicLink}</a>)}
       </div>
     </div>
   );
