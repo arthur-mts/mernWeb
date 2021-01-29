@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    API_URL: 'http://localhost:3333/accounts'
+    API_URL: 'http://golaroo.com/accounts'
   },
 }
