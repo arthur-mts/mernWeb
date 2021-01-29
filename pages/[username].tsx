@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import { useState } from "react";
-import { isAndroid } from "react-device-detect";
+import { isAndroid, isMobile } from "react-device-detect";
 
 interface UsernameProps {
   accountName: string;
@@ -20,10 +20,15 @@ export default function Username({accountName, dynamicLink, showDownloadLinks } 
     <div className="flex justify-center items-center w-screen h-screen">
       <div className="flex flex-col w-9/12 items-center text-center">
         <h1 className="text-2xl font-bold">{`This page is for ${accountName}`}</h1>
-        <button type="button" className="mt-5 border-2 border-solid rounded px-14 py-4 font-bold bg-blue" onClick={()=>setDynamicLinkVisibility(true)}>Share</button>
-        {dynamicLinkVisibility && (<a className="break-all mt-5 underline" href={dynamicLink}>{dynamicLink}</a>)}
-        {showDownloadLinks && (
-          <a className="break-all mt-5 underline" href={isAndroid ? androidUrl : iosUrl}>{isAndroid ? androidUrl : iosUrl}</a>
+        
+        
+        {showDownloadLinks && isMobile ? (
+          <a className="break-all mt-5 underline" href={isAndroid ? androidUrl : iosUrl}>{isAndroid ? 'Download on PlayStore' : 'Download on AppStore'}</a>
+        ): (
+          <>
+            <button type="button" className="mt-5 border-2 border-solid rounded px-14 py-4 font-bold bg-blue" onClick={()=>setDynamicLinkVisibility(true)}>Share</button>
+            {dynamicLinkVisibility && (<a className="break-all mt-5 underline" href={dynamicLink}>{dynamicLink}</a>)}
+          </>
         )}
       </div>
     </div>
@@ -35,6 +40,7 @@ export const getServerSideProps:GetServerSideProps= async ({params, query}) => {
 
   const showDownloadLinks = query.showDownloadLinks === 'true';
 
+  console.log(query);
   const res = await fetch(`${process.env.API_URL}/${username}`);
 
   if(res.status > 400) {
