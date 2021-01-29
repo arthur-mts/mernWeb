@@ -9,10 +9,10 @@ export default function Home() {
     e.preventDefault();
     try {
       await axios.post(`${process.env.API_URL}`, { name });
-      setName('');
       Router.push(`${name}`);
     }
     catch(err) {
+      console.log(err)
       if(err.response && err.response.status >= 400) {
         alert(err.response.data.message);
       }
